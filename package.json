@@ -1,0 +1,25 @@
+{
+  "name": "employee-tracker",
+  "version": "1.0.0",
+  "description": "Add departments. employees, and roles",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kendall-Arceo/Employee-Tracker.git"
+  },
+  "author": "Kendall Arceo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kendall-Arceo/Employee-Tracker/issues"
+  },
+  "homepage": "https://github.com/Kendall-Arceo/Employee-Tracker#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^7.1.0",
+    "mysql": "^2.18.1"
+  }
+}
