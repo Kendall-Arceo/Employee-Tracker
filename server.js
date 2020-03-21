@@ -18,15 +18,12 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err) {
   if (err) throw err;
-  connection.query("SELECT * FROM departments", function (err, result, fields) {
-    if (err) throw err;
-    console.table(result);
-  });
   createDepartment();
 });
 
 //initializer
-function createDepartment() {
+async function createDepartment() {
+  await 
     inquirer
       .prompt({
         name: "action",
@@ -47,7 +44,7 @@ function createDepartment() {
       .then(function(answer) {
         switch (answer.action) {
         case "View all Employees":
-          viewEmployee();
+          viewAllEmployees();
           break;
         
         case "View all Employees by Department":
@@ -79,22 +76,26 @@ function createDepartment() {
       });
 }
 
-function viewEmployee() {
+//Table showing all employees
+function viewAllEmployees() {
     inquirer
       .prompt({
         name: "action",
         type: "input",
-        message: "What would you like to do in your department?",
-  
+        message: "Here are the list of Employees!"
       })
       .then(function(answer) {
-
+        connection.query("SELECT * FROM departments", function (err, result, fields) {
+          if (err) throw err;
+          console.table(result);
+        });
         
 
-        console.log(answer);
+        
     });
 }
 
+//User gets employees by department keyword
 function employeeByDepartment() {
     inquirer
       .prompt({
@@ -120,100 +121,59 @@ function employeeByManager() {
 }
 
 function addEmployee() {
-    inquirer
+    return inquirer
       .prompt([
       {
         name: "first_name",
         type: "input",
         message: "What is your Employee's first name?",
-        validate: function(value) {
-          if (isNaN(value) === false) {
-            return true;
-          }
-          return false;
-        }
         
-      }, 
-      {
+        
+      },{
         type: 'input',
         name: 'last_name',
         message: "What's your Employee's last name?",
-        validate: function(value) {
-          if (isNaN(value) === false) {
-            return true;
-          }
-          return false;
-        }
+        
 
-      }, 
-      {
+      },{
         type: 'input',
         name: 'title',
         message: "What is his/her title?",
-        validate: function(value) {
-          if (isNaN(value) === false) {
-            return true;
-          }
-          return false;
-        }
-      }, 
-      {
+        
+      },{
         type: 'input',
         name: 'department',
         message: "Which department would you like to put this employee in?",
-        validate: function(value) {
-          if (isNaN(value) === false) {
-            return true;
-          }
-          return false;
-        }
-      }, 
-      {
+        
+      },{
 
         type: 'input',
         name: 'salary',
         message: "What is the salary for this title?",
-        validate: function(value) {
-          var pass = value.match(
-            /^([01]{1})?[-.\s]?\(?(\d{3})\)?[-.\s]?(\d{3})[-.\s]?(\d{4})\s?((?:#|ext\.?\s?|x\.?\s?){1}(?:\d+)?)?$/i
-          );
-          if (pass) {
-            return true;
-          }
-    
-          return 'Please enter a valid salary';
         
-        }
-        
-      }, 
-      {
+      },{
         type: 'input',
         name: 'manager',
         message: "Which manager will they be reporting to?",
-        validate: function(value) {
-          if (isNaN(value) === false) {
-            return true;
-          }
-          return false;
-        }
+        
       }
       
     ])
 
     .then(function(answers) {
-        
-        console.log(JSON.stringify(answers.first_name));
-        console.log(JSON.stringify(answers.last_name));
+      console.log(answers);
         
     });
 }
+
+
 
 function removeEmployee() {
     inquirer
       .prompt({
         name: "action",
         type: "input",
-        message: "Which Depratment do you want to look into?"
+        message: "Which Department do you want to look into?"
       })
       .then(function(answer) {
         console.log(answer);
